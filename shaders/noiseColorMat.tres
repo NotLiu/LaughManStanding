@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b6bovbfhq0fh4"]
+
+[ext_resource type="Shader" path="res://shaders/noiseColor.gdshader" id="1_rk0h4"]
+[ext_resource type="Texture2D" path="res://shaders/colorsGrad.tres" id="2_lkx52"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yn552"]
+noise_type = 3
+frequency = 0.04
+offset = Vector3(0, 304.35, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdwco"]
+width = 50
+height = 50
+seamless = true
+noise = SubResource("FastNoiseLite_yn552")
+
+[resource]
+shader = ExtResource("1_rk0h4")
+shader_parameter/scaleAmplitude = 0.15
+shader_parameter/timeScale = 0.7
+shader_parameter/export = 0.0
+shader_parameter/noise = SubResource("NoiseTexture2D_wdwco")
+shader_parameter/gradientColor = ExtResource("2_lkx52")

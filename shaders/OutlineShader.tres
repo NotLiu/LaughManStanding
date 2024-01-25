@@ -1,0 +1,43 @@
+[gd_resource type="Shader" format=3 uid="uid://ciexfg5rpk1x2"]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform float outline_width = 2.0;
+uniform float warp_slow = 5.0;
+uniform vec4 outline_color: source_color;
+uniform sampler2D noise : repeat_enable;
+uniform float noise_scale = 1.0;
+uniform float noiseOffset = 0.0;
+uniform float outline_scale = 1;
+
+void fragment() {
+    vec4 col = texture(TEXTURE, UV);
+    vec2 ps = TEXTURE_PIXEL_SIZE;
+    float a;
+    float maxa = col.a;
+    float mina = col.a;
+    
+  	float time = mod(TIME / warp_slow, 1.0);
+    vec2 noise_uv = UV * noise_scale + vec2(noiseOffset, -time); // Scale and offset the UVs
+    float ow = (outline_width + texture(noise, noise_uv).r * 20.0)*outline_scale;
+
+    
+    a = texture(TEXTURE, UV + vec2(0.0, -ow) * ps).a;
+    maxa = max(a, maxa);
+    mina = min(a, mina);
+    
+    a = texture(TEXTURE, UV + vec2(0.0, ow) * ps).a;
+    maxa = max(a, maxa);
+    mina = min(a, mina);
+    
+    a = texture(TEXTURE, UV + vec2(-ow, 0.0) * ps).a;
+    maxa = max(a, maxa);
+    mina = min(a, mina);
+    
+    a = texture(TEXTURE, UV + vec2(ow, 0.0) * ps).a;
+    maxa = max(a, maxa);
+    mina = min(a, mina);
+	
+    COLOR = mix(col.rgba, outline_color, maxa - mina);
+}"

@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cs6uf2kqfwdey"]
+
+[ext_resource type="Shader" uid="uid://ujs1ppfrv8e6" path="res://shaders/noiseColorMat-scale.tres" id="1_xf6ik"]
+
+[sub_resource type="FastNoiseLite" id="1"]
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="2"]
+width = 50
+height = 50
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("1")
+
+[resource]
+shader = ExtResource("1_xf6ik")
+shader_parameter/scaleAmplitude = 0.15
+shader_parameter/timeScale = 1.0
+shader_parameter/noise = SubResource("2")

@@ -1,0 +1,10 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://bixmaawht8sid"]
+
+[sub_resource type="Gradient" id="Gradient_sjxnh"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.125, 0.352459, 0.622951, 0.868852, 1)
+colors = PackedColorArray(0.937255, 0.0941176, 0.25098, 1, 0.992157, 0.854902, 0.321569, 1, 0.133333, 0.843137, 0.447059, 1, 0.101961, 0.607843, 0.909804, 1, 0.415686, 0.129412, 0.878431, 1, 0.937255, 0.0941176, 0.25098, 1)
+
+[resource]
+gradient = SubResource("Gradient_sjxnh")
+width = 30
