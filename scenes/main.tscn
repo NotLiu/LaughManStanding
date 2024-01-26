@@ -1,3 +1,37 @@
-[gd_scene format=3 uid="uid://c3qekxm2v4kfo"]
+[gd_scene load_steps=6 format=3 uid="uid://c3qekxm2v4kfo"]
+
+[ext_resource type="PackedScene" uid="uid://c2hmnbs1mimne" path="res://scenes/player.tscn" id="1_8gafn"]
+[ext_resource type="PackedScene" uid="uid://bfel1g4jbovrl" path="res://scenes/stage.tscn" id="1_64qen"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_hmkn8"]
+[ext_resource type="PackedScene" uid="uid://br8cde2s42oa5" path="res://scenes/title.tscn" id="3_0pdj2"]
+[ext_resource type="Script" path="res://addons/camera_2d_plus/objects/camera_2d_plus/camera_2d_plus_script.gd" id="5_tt5l0"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_hmkn8")
+
+[node name="Camera2DPlus" type="Camera2D" parent="."]
+z_index = -2
+position = Vector2(640, 380)
+limit_left = -50
+limit_right = 1330
+limit_bottom = 760
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+editor_draw_limits = true
+script = ExtResource("5_tt5l0")
+SHAKE_DECAY = 0.015
+
+[node name="Stage" parent="." instance=ExtResource("1_64qen")]
+z_index = 1
+
+[node name="Title" parent="." instance=ExtResource("3_0pdj2")]
+offset_right = 1280.0
+offset_bottom = 760.0
+
+[node name="Player" parent="." instance=ExtResource("1_8gafn")]
+z_index = 1
+position = Vector2(569, 612)
+scale = Vector2(3.5, 3.5)
+
+[connection signal="introDone" from="Title" to="." method="_on_title_intro_done"]

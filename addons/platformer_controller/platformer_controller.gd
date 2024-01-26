@@ -13,6 +13,8 @@ signal hit_ground()
 @export var input_right : String = "move_right"
 ## Name of input action to jump.
 @export var input_jump : String = "jump"
+## Name of input action to crouch
+@export var input_crouch : String = "crouch"
 
 
 const DEFAULT_MAX_JUMP_HEIGHT = 150
@@ -74,7 +76,7 @@ var _jump_duration: float = DEFAULT_JUMP_DURATION
 ## Multiplies the gravity by this while falling.
 @export var falling_gravity_multiplier = 1.5
 ## Amount of jumps allowed before needing to touch the ground again. Set to 2 for double jump.
-@export var max_jump_amount = 1
+@export var max_jump_amount = 2
 @export var max_acceleration = 10000
 @export var friction = 20
 @export var can_hold_jump : bool = false
@@ -135,11 +137,30 @@ func _ready():
 
 func _input(_event):
 	acc.x = 0
+			
+	if Input.is_action_pressed(input_crouch):
+		$AnimationPlayer.current_animation = "crouch"		
+	
 	if Input.is_action_pressed(input_left):
 		acc.x = -max_acceleration
-	
+		$Sprite.flip_h = true
+		if is_feet_on_ground():
+			$AnimationPlayer.current_animation = "run"
+
 	if Input.is_action_pressed(input_right):
 		acc.x = max_acceleration
+		$Sprite.flip_h = false
+		if is_feet_on_ground():
+			$AnimationPlayer.current_animation = "run"
+	
+	if Input.is_action_just_pressed("emote"):
+		$AnimationPlayer.current_animation = "emote"
+	
+	if Input.is_action_just_released(input_right) or Input.is_action_just_released(input_left) or Input.is_action_just_released(input_crouch):
+		$AnimationPlayer.current_animation = "idle"
+		$BoredTimer.wait_time = 3.5
+		$DeepBoredTimer.wait_time = 3.5
+		
 	
 	if Input.is_action_just_pressed(input_jump):
 		holding_jump = true
@@ -152,17 +173,27 @@ func _input(_event):
 
 
 func _physics_process(delta):
+	print($AnimationPlayer.current_animation)
+	if $AnimationPlayer.current_animation == "":
+		$AnimationPlayer.current_animation = "idle"
+		
+	
 	if is_coyote_timer_running() or current_jump_type == JumpType.NONE:
 		jumps_left = max_jump_amount
 	if is_feet_on_ground() and current_jump_type == JumpType.NONE:
 		start_coyote_timer()
+			
 		
 	# Check if we just hit the ground this frame
 	if not _was_on_ground and is_feet_on_ground():
 		current_jump_type = JumpType.NONE
 		if is_jump_buffer_timer_running() and not can_hold_jump: 
 			jump()
-		
+		else:
+			$AnimationPlayer.current_animation = "idle"
+			$BoredTimer.wait_time = 3.5
+			$DeepBoredTimer.wait_time = 3.5
+			$DeepBoredTimer.stop()
 		hit_ground.emit()
 	
 	
@@ -243,6 +274,7 @@ func is_feet_on_ground():
 
 ## Perform a ground jump, or a double jump if the character is in the air.
 func jump():
+	$AnimationPlayer.current_animation = "jump"
 	if can_double_jump():
 		double_jump()
 	else:
@@ -320,3 +352,46 @@ func calculate_friction(time_to_max):
 func calculate_speed(p_max_speed, p_friction):
 	return (p_max_speed / p_friction) - p_max_speed
 
+
+
+func _on_animation_player_animation_finished(anim_name):
+	# default animation to idle
+	print(anim_name)
+	if anim_name == "deep bored":
+		print("SNORIng")
+		$AnimationPlayer.current_animation = "snoring"
+	elif anim_name != "bored" and anim_name != "snoring":
+		$BoredTimer.wait_time = 3.5
+		$BoredTimer.start()
+	elif anim_name == "emote":
+		print("EMOTE FINISH")
+		$AnimationPlayer.current_animation = "idle"
+	
+
+func _on_bored_timer_timeout():
+	$BoredTimer.stop()
+	$BoredTimer.wait_time = 3.5
+	if $AnimationPlayer.current_animation != "deep bored":
+		$AnimationPlayer.current_animation = "bored"
+		
+		$DeepBoredTimer.start()
+
+func _on_deep_bored_timer_timeout():
+	$DeepBoredTimer.stop()
+	$DeepBoredTimer.wait_time = 3.5
+	if $AnimationPlayer.current_animation != "bored":
+		$AnimationPlayer.current_animation = "deep bored"
+
+
+func _on_animation_player_current_animation_changed(name):
+	if name == "idle":
+		$Sprite.scale = Vector2(1.0, 1.0)
+		$Sprite.position = Vector2(0.0, 0.0)
+		$"Sprite/voice-effect".visible = false
+		$BoredTimer.wait_time = 3.5
+		$BoredTimer.start()
+		
+func shock():
+	jump()
+	$AnimationPlayer.current_animation = "speak"
+	velocity.x = -500.0

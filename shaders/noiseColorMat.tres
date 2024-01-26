@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b6bovbfhq0fh4"]
 
 [ext_resource type="Shader" path="res://shaders/noiseColor.gdshader" id="1_rk0h4"]
-[ext_resource type="Texture2D" path="res://shaders/colorsGrad.tres" id="2_lkx52"]
+[ext_resource type="Texture2D" uid="uid://bixmaawht8sid" path="res://shaders/colorsGrad.tres" id="2_lkx52"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yn552"]
 noise_type = 3
