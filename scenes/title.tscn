@@ -1,11 +1,39 @@
-[gd_scene load_steps=10 format=3 uid="uid://br8cde2s42oa5"]
+[gd_scene load_steps=18 format=3 uid="uid://br8cde2s42oa5"]
 
 [ext_resource type="Script" path="res://scenes/title.gd" id="1_qfn8k"]
 [ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="1_yhp84"]
 [ext_resource type="Material" uid="uid://7dl3o7jtmjkw" path="res://shaders/logo-wobble-mat.tres" id="2_5moyk"]
+[ext_resource type="Shader" uid="uid://l7wp44mhw2o8" path="res://shaders/OutlineShader.tres" id="2_6hqyk"]
 [ext_resource type="Texture2D" uid="uid://v2jdcc3jvlkt" path="res://assets/logo.png" id="3_i37nm"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bk5ms"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dh10c"]
+width = 50
+height = 50
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_bk5ms")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlwry"]
+shader = ExtResource("2_6hqyk")
+shader_parameter/outline_width = -10.0
+shader_parameter/warp_slow = 10.0
+shader_parameter/outline_color = Color(0, 0, 0, 0)
+shader_parameter/noise_scale = 0.1
+shader_parameter/noiseOffset = 0.0
+shader_parameter/outline_scale = 0.2
+shader_parameter/noise = SubResource("NoiseTexture2D_dh10c")
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d382"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxjc1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_20755"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ky5wp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wyddb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_su4xg"]
 
@@ -94,39 +122,51 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_qfn8k")
 metadata/_edit_use_anchors_ = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.876316
-anchor_right = 1.00078
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_right = -1.0
+offset_left = -640.0
+offset_top = -84.0
+offset_right = 640.0
 grow_horizontal = 2
 grow_vertical = 0
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 
 [node name="START" type="Button" parent="CenterContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_wlwry")
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yhp84")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7d382")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pxjc1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_20755")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ky5wp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wyddb")
 text = "START
 "
 
 [node name="CREDITS" type="Button" parent="CenterContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_wlwry")
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_yhp84")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_su4xg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pxjc1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_20755")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ky5wp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wyddb")
 text = "CREDITS"
 
 [node name="LOGO" type="TextureButton" parent="."]
@@ -137,9 +177,10 @@ offset_top = -400.0
 offset_right = 979.0
 offset_bottom = 264.0
 rotation = -0.0872665
-scale = Vector2(0.7, 0.7)
+scale = Vector2(1.5, 1.5)
 pivot_offset = Vector2(357, 332)
 focus_mode = 0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_i37nm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

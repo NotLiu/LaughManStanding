@@ -145,13 +145,19 @@ func _input(_event):
 		acc.x = -max_acceleration
 		$Sprite.flip_h = true
 		if is_feet_on_ground():
-			$AnimationPlayer.current_animation = "run"
+			if is_on_wall():
+				$AnimationPlayer.current_animation = "push"
+			else:
+				$AnimationPlayer.current_animation = "run"
 
 	if Input.is_action_pressed(input_right):
 		acc.x = max_acceleration
 		$Sprite.flip_h = false
 		if is_feet_on_ground():
-			$AnimationPlayer.current_animation = "run"
+			if is_on_wall():
+				$AnimationPlayer.current_animation = "push"
+			else:
+				$AnimationPlayer.current_animation = "run"
 	
 	if Input.is_action_just_pressed("emote"):
 		$AnimationPlayer.current_animation = "emote"
@@ -173,7 +179,7 @@ func _input(_event):
 
 
 func _physics_process(delta):
-	print($AnimationPlayer.current_animation)
+	#print($AnimationPlayer.current_animation)
 	if $AnimationPlayer.current_animation == "":
 		$AnimationPlayer.current_animation = "idle"
 		
@@ -385,11 +391,19 @@ func _on_deep_bored_timer_timeout():
 
 func _on_animation_player_current_animation_changed(name):
 	if name == "idle":
+		$runparticle.emitting = false
 		$Sprite.scale = Vector2(1.0, 1.0)
 		$Sprite.position = Vector2(0.0, 0.0)
 		$"Sprite/voice-effect".visible = false
 		$BoredTimer.wait_time = 3.5
 		$BoredTimer.start()
+	elif name == "run" or name == "jump":
+		$runparticle.process_material.initial_velocity_min = -abs($runparticle.process_material.initial_velocity_min) * sign(scale.x)
+		$runparticle.process_material.initial_velocity_max = -abs($runparticle.process_material.initial_velocity_max) * sign(scale.x)
+		$runparticle.emitting = true
+	else:
+		$runparticle.emitting = false
+		
 		
 func shock():
 	jump()

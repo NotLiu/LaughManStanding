@@ -3,6 +3,10 @@ signal introDone
 
 @onready var anim = get_node("AnimationPlayer")
 # Called when the node enters the scene tree for the first time.
+#func _input(event):
+	#print("Input event received in Control node")
+	#print(event)
+
 func _ready():
 	anim.current_animation = "intro"
 	

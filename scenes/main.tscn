@@ -10,7 +10,8 @@
 script = ExtResource("1_hmkn8")
 
 [node name="Camera2DPlus" type="Camera2D" parent="."]
-z_index = -2
+z_index = -4
+z_as_relative = false
 position = Vector2(640, 380)
 limit_left = -50
 limit_right = 1330
@@ -25,13 +26,19 @@ SHAKE_DECAY = 0.015
 [node name="Stage" parent="." instance=ExtResource("1_64qen")]
 z_index = 1
 
-[node name="Title" parent="." instance=ExtResource("3_0pdj2")]
-offset_right = 1280.0
-offset_bottom = 760.0
-
 [node name="Player" parent="." instance=ExtResource("1_8gafn")]
 z_index = 1
 position = Vector2(569, 612)
 scale = Vector2(3.5, 3.5)
 
-[connection signal="introDone" from="Title" to="." method="_on_title_intro_done"]
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Title" parent="UI" instance=ExtResource("3_0pdj2")]
+focus_mode = 1
+
+[connection signal="left_curtain_in" from="Stage" to="." method="_on_stage_left_curtain_in"]
+[connection signal="left_curtain_out" from="Stage" to="." method="_on_stage_left_curtain_out"]
+[connection signal="right_curtain_in" from="Stage" to="." method="_on_stage_right_curtain_in"]
+[connection signal="right_curtain_out" from="Stage" to="." method="_on_stage_right_curtain_out"]
+[connection signal="introDone" from="UI/Title" to="." method="_on_title_intro_done"]

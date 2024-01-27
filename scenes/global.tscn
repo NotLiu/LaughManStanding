@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://cvrgn54j7645r"]
+[gd_scene load_steps=2 format=3 uid="uid://cvrgn54j7645r"]
+
+[ext_resource type="Script" path="res://scenes/global.gd" id="1_ckls4"]
 
 [node name="global" type="Node"]
+script = ExtResource("1_ckls4")

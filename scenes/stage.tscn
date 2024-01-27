@@ -1,6 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bfel1g4jbovrl"]
+[gd_scene load_steps=23 format=3 uid="uid://bfel1g4jbovrl"]
 
+[ext_resource type="Script" path="res://scenes/stage.gd" id="1_2wgem"]
 [ext_resource type="Texture2D" uid="uid://dm3fkldpcbgto" path="res://assets/stage-bg.png" id="1_4xdj2"]
+[ext_resource type="Texture2D" uid="uid://bvf20jignogv8" path="res://assets/noPad.png" id="1_ijv8t"]
 [ext_resource type="Texture2D" uid="uid://co4pa1dms5pdk" path="res://assets/long-curtain.png" id="2_2jmiq"]
 [ext_resource type="Texture2D" uid="uid://cwmko7y2gbx70" path="res://assets/stage-light.png" id="2_ffym3"]
 [ext_resource type="Material" uid="uid://b6bovbfhq0fh4" path="res://shaders/noiseColorMat.tres" id="2_qmyhy"]
@@ -10,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ccc2idncrartj" path="res://assets/stage-floor.png" id="5_u55oe"]
 [ext_resource type="Texture2D" uid="uid://clwewrgkufwvu" path="res://assets/mic.png" id="6_5l0i7"]
 [ext_resource type="Material" uid="uid://bc851actdw4so" path="res://shaders/curtain-wobble-mat.tres" id="6_y1ves"]
+[ext_resource type="Script" path="res://addons/softbody2d/softbody2d_rigidbody.gd" id="10_wfvfe"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4eoo0"]
 seed = -1
@@ -30,6 +33,19 @@ shader_parameter/flowing = false
 shader_parameter/frames = 10
 shader_parameter/flowMap = SubResource("NoiseTexture2D_mkpmd")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqqhg"]
+size = Vector2(277, 647)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4hp1"]
+size = Vector2(278, 634)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7w51o"]
+bounce = 0.52
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s3mba"]
+size = Vector2(20, 132)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_35q4p"]
 size = Vector2(112, 802)
 
@@ -39,9 +55,17 @@ size = Vector2(1608, 152)
 [node name="Stage" type="Node2D"]
 z_as_relative = false
 texture_filter = 1
+script = ExtResource("1_2wgem")
 
 [node name="SET" type="Node2D" parent="."]
 z_as_relative = false
+
+[node name="NoPad" type="Sprite2D" parent="SET"]
+modulate = Color(0.0705882, 0.0784314, 0.109804, 1)
+z_index = -5
+position = Vector2(641.5, 393)
+scale = Vector2(48.7813, 29.8125)
+texture = ExtResource("1_ijv8t")
 
 [node name="Stage-bg" type="Sprite2D" parent="SET"]
 z_index = -1
@@ -65,6 +89,15 @@ position = Vector2(-175, 0)
 texture = ExtResource("2_2jmiq")
 centered = false
 
+[node name="LEFTCOLLISION" type="Area2D" parent="SET"]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SET/LEFTCOLLISION"]
+material = ExtResource("6_y1ves")
+position = Vector2(-1.5, 313.5)
+shape = SubResource("RectangleShape2D_qqqhg")
+
 [node name="right-curtain" type="Sprite2D" parent="SET"]
 z_index = 1
 z_as_relative = false
@@ -72,28 +105,56 @@ material = ExtResource("6_y1ves")
 position = Vector2(1280, 335)
 texture = ExtResource("2_2jmiq")
 
+[node name="RIGHTCOLLISION" type="Area2D" parent="SET"]
+position = Vector2(1280, 335)
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SET/RIGHTCOLLISION"]
+material = ExtResource("6_y1ves")
+position = Vector2(1, -19)
+shape = SubResource("RectangleShape2D_b4hp1")
+
 [node name="Side-curtain" type="Sprite2D" parent="SET"]
 z_index = 2
 z_as_relative = false
+position = Vector2(-139.636, 0)
+scale = Vector2(1.21818, 1.21818)
 texture = ExtResource("3_jkv4a")
 centered = false
 
 [node name="Top-curtain" type="Sprite2D" parent="SET"]
 z_index = 3
 z_as_relative = false
+position = Vector2(-140, 0)
+scale = Vector2(1.21875, 1.21875)
 texture = ExtResource("4_obyal")
 centered = false
 
 [node name="Stage-floor" type="Sprite2D" parent="SET"]
 z_as_relative = false
-position = Vector2(640, 667)
+position = Vector2(640, 675)
+scale = Vector2(1.21053, 1.21053)
 texture = ExtResource("5_u55oe")
 
-[node name="Mic" type="Sprite2D" parent="SET"]
-z_index = 1
+[node name="Mic" type="RigidBody2D" parent="SET"]
+z_index = 3
 z_as_relative = false
-position = Vector2(640, 579)
+position = Vector2(644, 572)
+collision_layer = 0
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_7w51o")
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, 40)
+linear_velocity = Vector2(0, -50)
+script = ExtResource("10_wfvfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SET/Mic"]
 texture = ExtResource("6_5l0i7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SET/Mic"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_s3mba")
 
 [node name="wall" type="StaticBody2D" parent="."]
 z_as_relative = false
@@ -112,8 +173,15 @@ shape = SubResource("RectangleShape2D_35q4p")
 [node name="floor" type="StaticBody2D" parent="."]
 z_as_relative = false
 position = Vector2(645, 722)
+collision_layer = 3
+collision_mask = 3
 
 [node name="floor-collider" type="CollisionShape2D" parent="floor"]
 z_as_relative = false
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_oubwx")
+
+[connection signal="body_entered" from="SET/LEFTCOLLISION" to="." method="_on_leftcollision_body_entered"]
+[connection signal="body_exited" from="SET/LEFTCOLLISION" to="." method="_on_leftcollision_body_exited"]
+[connection signal="body_entered" from="SET/RIGHTCOLLISION" to="." method="_on_rightcollision_body_entered"]
+[connection signal="body_exited" from="SET/RIGHTCOLLISION" to="." method="_on_rightcollision_body_exited"]
