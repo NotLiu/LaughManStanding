@@ -1,6 +1,6 @@
 extends Node
 
-@export var game_state = "INTRO" # TALKING, TYPING, DODGING
+@export var game_state = "INTRO" # TALKING, COUNTDOWN, TYPING, REVIEW, DODGING
 var level = 0
 var points = 0
 

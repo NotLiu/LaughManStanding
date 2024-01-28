@@ -5,7 +5,7 @@ class_name PlatformerController2D
 signal jumped(is_ground_jump: bool)
 signal hit_ground()
 
-
+var caught_objects = 0
 # Set these to the name of your action (in the Input Map)
 ## Name of input action to move left.
 @export var input_left : String = "move_left"
@@ -405,7 +405,16 @@ func _on_animation_player_current_animation_changed(name):
 		$runparticle.emitting = false
 		
 		
-func shock():
+func shock(force):
 	jump()
 	$AnimationPlayer.current_animation = "speak"
-	velocity.x = -500.0
+	velocity.x = force # -500.0 for intro scene
+
+func emote():
+	jump()
+	$AnimationPlayer.current_animation = "emote"
+
+func hit(dmg):	
+	$"/root/Global".points += dmg
+	$hit.play()
+	caught_objects += 1

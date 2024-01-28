@@ -1,3 +1,136 @@
-[gd_scene format=3 uid="uid://duvm77le3nyxd"]
+[gd_scene load_steps=8 format=3 uid="uid://duvm77le3nyxd"]
+
+[ext_resource type="Script" path="res://scenes/soundboard.gd" id="1_ccd74"]
+[ext_resource type="AudioStream" uid="uid://bulr71bxvej63" path="res://assets/audio_hero_Yessir_SIPML_K-0329.mp3" id="2_5l8cs"]
+[ext_resource type="AudioStream" uid="uid://dk403jmc75j8r" path="res://assets/music_zapsplat_game_music_action_retro_8_bit_repeating_016.mp3" id="3_33cxi"]
+[ext_resource type="AudioStream" uid="uid://cfin3wl0aieo1" path="res://assets/human_audience_laughter_comedy_club_x200_people_komedia_brighton_comic_boom_017.mp3" id="4_ne3yp"]
+
+[sub_resource type="Animation" id="Animation_veqpd"]
+resource_name = "FadeToTrack1"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TITLE:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TYPING:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TYPING:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TITLE:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_1fxux"]
+resource_name = "FadeToTrack2"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TITLE:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TYPING:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TYPING:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TITLE:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b0iix"]
+_data = {
+"FadeToTrack1": SubResource("Animation_veqpd"),
+"FadeToTrack2": SubResource("Animation_1fxux")
+}
 
 [node name="soundboard" type="Node"]
+script = ExtResource("1_ccd74")
+
+[node name="TITLE" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_5l8cs")
+volume_db = -10.0
+autoplay = true
+
+[node name="TYPING" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_33cxi")
+volume_db = -80.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b0iix")
+}
+
+[node name="CHEER" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ne3yp")

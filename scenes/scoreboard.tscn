@@ -1,0 +1,179 @@
+[gd_scene load_steps=10 format=3 uid="uid://l8mybvqjsp0h"]
+
+[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="1_e7af5"]
+[ext_resource type="Script" path="res://scenes/scoreboard.gd" id="1_vwi7a"]
+[ext_resource type="Shader" path="res://shaders/wobble.gdshader" id="2_6rjs6"]
+[ext_resource type="Texture2D" uid="uid://bqai7pm28bigc" path="res://assets/resultsCARD.png" id="2_ivck8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p2ca1"]
+seed = -1
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kkfkw"]
+width = 50
+height = 50
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_p2ca1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p6ut6"]
+shader = ExtResource("2_6rjs6")
+shader_parameter/strength = 0.005
+shader_parameter/speed = 4.0
+shader_parameter/flowing = true
+shader_parameter/frames = 8
+shader_parameter/flowMap = SubResource("NoiseTexture2D_kkfkw")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_diupx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rwuuc"]
+
+[node name="SCOREBOARD" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vwi7a")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RESULTCARD" type="TextureRect" parent="CenterContainer"]
+material = SubResource("ShaderMaterial_p6ut6")
+custom_minimum_size = Vector2(0, 610)
+layout_mode = 2
+texture = ExtResource("2_ivck8")
+stretch_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="round" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 48
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[center]ROUND: 1[/center]"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="score" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "SCORE:"
+
+[node name="scoreval" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[left][/left]"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="wpm" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "WORDS PER MINUTE:"
+
+[node name="wpmval" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer3"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[left][/left]"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="time" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer5"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "TIME:"
+
+[node name="timeval" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer5"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[left][/left]"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 125)
+layout_mode = 2
+
+[node name="accuracy" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer4"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(400, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "ACCURACY:"
+
+[node name="accuracyval" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBoxContainer4"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[left][/left]"
+
+[node name="press" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+modulate = Color(0.219608, 0.439216, 0.356863, 1)
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_e7af5")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_diupx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rwuuc")
+bbcode_enabled = true
+text = "[center]Press to continue...[/center]"

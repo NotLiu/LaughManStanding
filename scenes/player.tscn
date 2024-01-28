@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://c2hmnbs1mimne"]
+[gd_scene load_steps=25 format=3 uid="uid://c2hmnbs1mimne"]
 
 [ext_resource type="Script" path="res://addons/platformer_controller/platformer_controller.gd" id="1_vscul"]
 [ext_resource type="Texture2D" uid="uid://bsheho38jw0m7" path="res://assets/player.png" id="2_wyohe"]
 [ext_resource type="Texture2D" uid="uid://dsw05pq2vgjkx" path="res://assets/voice-effect.png" id="3_18gvo"]
 [ext_resource type="Texture2D" uid="uid://blg8i55lu7ncc" path="res://assets/star.png" id="4_410th"]
 [ext_resource type="Texture2D" uid="uid://cngvs21aea3pt" path="res://assets/particleanimation.png" id="5_5tqt8"]
+[ext_resource type="AudioStream" uid="uid://b6lyokunvbydw" path="res://assets/hitHurt.wav" id="6_75stm"]
 
 [sub_resource type="Animation" id="Animation_lfhql"]
 resource_name = "bored"
@@ -447,7 +448,7 @@ position = Vector2(0, -0.15)
 texture = ExtResource("2_wyohe")
 hframes = 7
 vframes = 4
-frame = 8
+frame = 7
 
 [node name="voice-effect" type="Sprite2D" parent="Sprite"]
 visible = false
@@ -490,6 +491,11 @@ amount = 1
 process_material = SubResource("ParticleProcessMaterial_y574l")
 texture = ExtResource("5_5tqt8")
 lifetime = 0.4
+
+[node name="hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_75stm")
+volume_db = -5.0
+pitch_scale = 1.1
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="current_animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_current_animation_changed"]

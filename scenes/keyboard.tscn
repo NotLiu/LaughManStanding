@@ -1,44 +1,146 @@
-[gd_scene load_steps=5 format=3 uid="uid://cn3kxa1s7enrx"]
+[gd_scene load_steps=18 format=3 uid="uid://cn3kxa1s7enrx"]
 
-[ext_resource type="Script" path="res://Keyboard.gd" id="1_mnl8w"]
-[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="2_ety6q"]
+[ext_resource type="Script" path="res://scripts/Keyboard.gd" id="1_sagmg"]
+[ext_resource type="FontFile" uid="uid://crla6oj4c6nmb" path="res://assets/VCR_OSD_MONO_1.001.ttf" id="2_r7kir"]
+[ext_resource type="AudioStream" uid="uid://c3lxgaykj17gc" path="res://assets/keyb.wav" id="3_gsqe4"]
+[ext_resource type="AudioStream" uid="uid://cwmvistirqkd5" path="res://assets/wrong.wav" id="4_b2bp5"]
+[ext_resource type="AudioStream" uid="uid://qjmnldds0f7g" path="res://assets/keytoo.wav" id="4_iyv08"]
+[ext_resource type="AudioStream" uid="uid://dgkrhv261rhy2" path="res://assets/keythree.wav" id="5_xocj4"]
+[ext_resource type="AudioStream" uid="uid://cstvotky1l72u" path="res://assets/key42.wav" id="6_xsr02"]
+[ext_resource type="AudioStream" uid="uid://dufk3u1gmpnh1" path="res://assets/keyfive.wav" id="7_mukwi"]
+[ext_resource type="AudioStream" uid="uid://bu82qjk2p2lmm" path="res://assets/key6.wav" id="8_gqclt"]
+[ext_resource type="AudioStream" uid="uid://j3k7ha78g4cm" path="res://assets/key7.wav" id="9_5ll7g"]
+[ext_resource type="AudioStream" uid="uid://c7hp3h1cdwveo" path="res://assets/key8.wav" id="10_rlkkw"]
+[ext_resource type="AudioStream" uid="uid://bqx82qsobmo3a" path="res://assets/key9.wav" id="11_fkxhq"]
+[ext_resource type="AudioStream" uid="uid://ck1bhepu6r6c4" path="res://assets/key20.wav" id="12_w2ljo"]
+[ext_resource type="AudioStream" uid="uid://dulwvnhjstxjd" path="res://assets/back.wav" id="14_pa6wh"]
+[ext_resource type="PackedScene" uid="uid://clk63owi5adbl" path="res://scenes/timer.tscn" id="15_ou2id"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rjkjj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1qfae"]
 
 [node name="Keyboard" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_mnl8w")
+script = ExtResource("1_sagmg")
 
 [node name="layoutText" type="RichTextLabel" parent="."]
 modulate = Color(1, 1, 1, 0.490196)
+custom_minimum_size = Vector2(800, 450)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/normal_font = ExtResource("2_ety6q")
+pivot_offset = Vector2(0, -100)
+theme_override_fonts/normal_font = ExtResource("2_r7kir")
 theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rjkjj")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1qfae")
 bbcode_enabled = true
+visible_characters_behavior = 3
 
 [node name="typedText" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(800, 450)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/normal_font = ExtResource("2_ety6q")
+pivot_offset = Vector2(0, -100)
+theme_override_fonts/normal_font = ExtResource("2_r7kir")
 theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rjkjj")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1qfae")
 bbcode_enabled = true
+visible_characters_behavior = 3
+
+[node name="Clack" type="Node2D" parent="."]
+
+[node name="keyClack1" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("3_gsqe4")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack2" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("4_iyv08")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack3" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("5_xocj4")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack4" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("6_xsr02")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack5" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("7_mukwi")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack6" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("8_gqclt")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack7" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("9_5ll7g")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack8" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("10_rlkkw")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack9" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("11_fkxhq")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyClack10" type="AudioStreamPlayer2D" parent="Clack" groups=["clack"]]
+stream = ExtResource("12_w2ljo")
+volume_db = -10.0
+pitch_scale = 0.75
+
+[node name="keyWrong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_b2bp5")
+volume_db = -20.0
+
+[node name="keyBack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_pa6wh")
+volume_db = -10.0
+pitch_scale = 0.8
+
+[node name="TypeTimer" type="Timer" parent="."]
+
+[node name="Timer" parent="." instance=ExtResource("15_ou2id")]
+layout_mode = 1
+
+[connection signal="timeout" from="TypeTimer" to="." method="_on_type_timer_timeout"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://clk63owi5adbl"]
+
+[ext_resource type="Script" path="res://scenes/Timer.gd" id="1_awahl"]
+[ext_resource type="Texture2D" uid="uid://bvf20jignogv8" path="res://assets/noPad.png" id="2_m1ybl"]
+[ext_resource type="Texture2D" uid="uid://dm0ld8ceq75jt" path="res://assets/diamond.png" id="3_01na7"]
+
+[sub_resource type="Curve" id="Curve_gwbl5"]
+_data = [Vector2(0, 0.813187), 0.0, 0.0, 0, 0, Vector2(0.686667, 0.582418), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tsn11"]
+curve = SubResource("Curve_gwbl5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nxpni"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 45, 0)
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_tsn11")
+
+[node name="Timer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_awahl")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(1280, 180)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="fill" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(650, 10)
+layout_direction = 2
+layout_mode = 2
+texture = ExtResource("2_m1ybl")
+expand_mode = 2
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(964, 100)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_nxpni")
+texture = ExtResource("3_01na7")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(315, 100)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_nxpni")
+texture = ExtResource("3_01na7")

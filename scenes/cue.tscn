@@ -1,0 +1,196 @@
+[gd_scene load_steps=10 format=3 uid="uid://cyc4g5gdlflny"]
+
+[ext_resource type="Script" path="res://scenes/cue.gd" id="1_22rbm"]
+[ext_resource type="Texture2D" uid="uid://cqo016cpq1qap" path="res://assets/cueCARD.png" id="1_i2b63"]
+[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="3_5pg2n"]
+[ext_resource type="Texture2D" uid="uid://df7lw2fd70ysq" path="res://assets/hands.png" id="4_gl3dg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wxkhs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_snuvq"]
+
+[sub_resource type="Animation" id="Animation_0aafm"]
+resource_name = "flip_down"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, -1), Vector2(1, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 126.563), Vector2(0, 175)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card/TEXT:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.0156863, 0.0941176, 0.0941176, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_48trd"]
+resource_name = "flip_up"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, -1), Vector2(1, -1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 175), Vector2(0, 125), Vector2(0, 30), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card/TEXT:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.0156863, 0.0941176, 0.0941176, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vjqxh"]
+_data = {
+"flip_down": SubResource("Animation_0aafm"),
+"flip_up": SubResource("Animation_48trd")
+}
+
+[node name="Cue" type="Node2D"]
+script = ExtResource("1_22rbm")
+
+[node name="Cue" type="Node2D" parent="."]
+visible = false
+modulate = Color(0.0156863, 0.0941176, 0.0941176, 1)
+texture_filter = 1
+position = Vector2(0, 175)
+scale = Vector2(1, -1)
+
+[node name="Card" type="Sprite2D" parent="Cue"]
+texture = ExtResource("1_i2b63")
+
+[node name="TEXT" type="RichTextLabel" parent="Cue/Card"]
+visible = false
+offset_left = -75.0
+offset_top = -28.0
+offset_right = 75.0
+offset_bottom = 50.0
+theme_override_colors/default_color = Color(0, 0.568627, 0.470588, 1)
+theme_override_fonts/normal_font = ExtResource("3_5pg2n")
+theme_override_font_sizes/normal_font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wxkhs")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_snuvq")
+bbcode_enabled = true
+text = "[center]CHEER NOW
+[/center]"
+
+[node name="Hands" type="Node2D" parent="Cue"]
+position = Vector2(-3, 3)
+
+[node name="leftHand" type="Sprite2D" parent="Cue/Hands"]
+position = Vector2(-44, 48)
+scale = Vector2(2, 2)
+texture = ExtResource("4_gl3dg")
+hframes = 7
+frame = 3
+
+[node name="rightHand" type="Sprite2D" parent="Cue/Hands"]
+position = Vector2(52, 48)
+scale = Vector2(-2, 2)
+texture = ExtResource("4_gl3dg")
+hframes = 7
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cue"]
+libraries = {
+"": SubResource("AnimationLibrary_vjqxh")
+}

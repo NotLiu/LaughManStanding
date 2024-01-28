@@ -1,29 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://br8cde2s42oa5"]
+[gd_scene load_steps=16 format=3 uid="uid://br8cde2s42oa5"]
 
 [ext_resource type="Script" path="res://scenes/title.gd" id="1_qfn8k"]
 [ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="1_yhp84"]
 [ext_resource type="Material" uid="uid://7dl3o7jtmjkw" path="res://shaders/logo-wobble-mat.tres" id="2_5moyk"]
-[ext_resource type="Shader" uid="uid://l7wp44mhw2o8" path="res://shaders/OutlineShader.tres" id="2_6hqyk"]
+[ext_resource type="Texture2D" uid="uid://cpmqqaii0w8pg" path="res://assets/hgradient.png" id="2_njgfk"]
 [ext_resource type="Texture2D" uid="uid://v2jdcc3jvlkt" path="res://assets/logo.png" id="3_i37nm"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_bk5ms"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dh10c"]
-width = 50
-height = 50
-seamless = true
-as_normal_map = true
-noise = SubResource("FastNoiseLite_bk5ms")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlwry"]
-shader = ExtResource("2_6hqyk")
-shader_parameter/outline_width = -10.0
-shader_parameter/warp_slow = 10.0
-shader_parameter/outline_color = Color(0, 0, 0, 0)
-shader_parameter/noise_scale = 0.1
-shader_parameter/noiseOffset = 0.0
-shader_parameter/outline_scale = 0.2
-shader_parameter/noise = SubResource("NoiseTexture2D_dh10c")
+[ext_resource type="AudioStream" uid="uid://chjhrtvqh14gk" path="res://assets/cackleLaugh.mp3" id="6_ub816"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7d382"]
 
@@ -39,7 +21,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_dh10c")
 
 [sub_resource type="Animation" id="Animation_ddxvl"]
 resource_name = "intro"
-length = 0.4
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -77,6 +59,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(1.5, 1.5), Vector2(0.5, 0.5), Vector2(0.8, 0.8), Vector2(0.7, 0.7)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LaughAudio:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LaughAudio:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-20.0, -20.0, -40.0]
+}
 
 [sub_resource type="Animation" id="Animation_qdfub"]
 resource_name = "laugh"
@@ -105,6 +111,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0.7, 0.7), Vector2(0.8, 0.8), Vector2(0.7, 0.7), Vector2(0.8, 0.8), Vector2(0.7, 0.7)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LaughAudio:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-20.0, -20.0, -40.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LaughAudio:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eanwx"]
@@ -139,13 +169,28 @@ offset_right = 640.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="ButtonBG" type="TextureRect" parent="CenterContainer"]
+modulate = Color(0.0705882, 0.0784314, 0.109804, 1)
+custom_minimum_size = Vector2(850, 84)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_njgfk")
+
+[node name="ButtonBG" type="TextureRect" parent="CenterContainer/ButtonBG"]
+modulate = Color(0.0705882, 0.0784314, 0.109804, 1)
+custom_minimum_size = Vector2(500, 84)
+layout_mode = 0
+texture = ExtResource("2_njgfk")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 
 [node name="START" type="Button" parent="CenterContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_wlwry")
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.937255, 0.964706, 0.988235, 1)
+theme_override_colors/font_pressed_color = Color(0.776471, 0.87451, 0.956863, 1)
+theme_override_colors/font_hover_color = Color(0.776471, 0.87451, 0.956863, 1)
 theme_override_fonts/font = ExtResource("1_yhp84")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7d382")
@@ -157,9 +202,11 @@ text = "START
 "
 
 [node name="CREDITS" type="Button" parent="CenterContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_wlwry")
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.937255, 0.964706, 0.988235, 1)
+theme_override_colors/font_pressed_color = Color(0.776471, 0.87451, 0.956863, 1)
+theme_override_colors/font_hover_color = Color(0.776471, 0.87451, 0.956863, 1)
 theme_override_fonts/font = ExtResource("1_yhp84")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxEmpty_su4xg")
@@ -173,11 +220,11 @@ text = "CREDITS"
 material = ExtResource("2_5moyk")
 layout_mode = 0
 offset_left = 265.0
-offset_top = -400.0
+offset_top = -30.0
 offset_right = 979.0
-offset_bottom = 264.0
+offset_bottom = 634.0
 rotation = -0.0872665
-scale = Vector2(1.5, 1.5)
+scale = Vector2(0.7, 0.7)
 pivot_offset = Vector2(357, 332)
 focus_mode = 0
 mouse_default_cursor_shape = 2
@@ -188,5 +235,10 @@ libraries = {
 "": SubResource("AnimationLibrary_eanwx")
 }
 
+[node name="LaughAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ub816")
+volume_db = -40.0
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/START" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="LOGO" to="." method="_on_logo_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

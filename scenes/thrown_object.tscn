@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bym8d8pt8i26c"]
+
+[ext_resource type="PackedScene" uid="uid://clk63owi5adbl" path="res://scenes/timer.tscn" id="1_le3rc"]
+[ext_resource type="Script" path="res://scenes/thrown_object.gd" id="1_tmtfm"]
+
+[node name="ThrownObject" type="Node2D"]
+script = ExtResource("1_tmtfm")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(1280, 760)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 760.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" parent="Control" instance=ExtResource("1_le3rc")]
+layout_mode = 1
+
+[node name="objectsGroup" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+
+[node name="throwTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="throwTimer" to="." method="_on_throw_timer_timeout"]

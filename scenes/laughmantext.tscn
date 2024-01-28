@@ -1,0 +1,147 @@
+[gd_scene load_steps=14 format=3 uid="uid://75n2nf3524ov"]
+
+[ext_resource type="Script" path="res://scenes/laughmantext.gd" id="1_lpqxh"]
+[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="1_rswjs"]
+[ext_resource type="Texture2D" uid="uid://dm0ld8ceq75jt" path="res://assets/diamond.png" id="3_4j0i2"]
+[ext_resource type="AudioStream" uid="uid://chjhrtvqh14gk" path="res://assets/cackleLaugh.mp3" id="4_psd7r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lte4g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tlyu"]
+
+[sub_resource type="Animation" id="Animation_vgj7y"]
+resource_name = "talk"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer/RichTextLabel:theme_override_font_sizes/normal_font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.35, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [48, 48, 52, 40, 48]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/RichTextLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.108076, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.486275), Color(1, 1, 1, 0.913725), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("textParticle:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_44iox"]
+_data = {
+"talk": SubResource("Animation_vgj7y")
+}
+
+[sub_resource type="Gradient" id="Gradient_t8yj6"]
+offsets = PackedFloat32Array(0, 0.729508, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6r8hi"]
+gradient = SubResource("Gradient_t8yj6")
+
+[sub_resource type="Curve" id="Curve_obx0h"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.686667, 0.67033), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_owi1c"]
+curve = SubResource("Curve_obx0h")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4leyi"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 30.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 200, 0)
+scale_min = 0.1
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_owi1c")
+color_ramp = SubResource("GradientTexture1D_6r8hi")
+
+[node name="LAUGHMANTEXT" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_lpqxh")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
+modulate = Color(1, 1, 1, 0.486274)
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("1_rswjs")
+theme_override_font_sizes/normal_font_size = 48
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lte4g")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8tlyu")
+bbcode_enabled = true
+text = "[center]WOW[/center]"
+
+[node name="textTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_44iox")
+}
+
+[node name="textParticle" type="GPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(634, 200)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_4leyi")
+texture = ExtResource("3_4j0i2")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.61
+
+[node name="laughmanSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_psd7r")
+volume_db = -8.0
+pitch_scale = 0.75
+
+[connection signal="timeout" from="textTimer" to="." method="_on_text_timer_timeout"]

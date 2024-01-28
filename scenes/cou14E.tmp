@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw6ynenextm6t"]
+
+[ext_resource type="Script" path="res://Countdown.gd" id="1_4xsuu"]
+[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="2_hctbn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4jthi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xl6h1"]
+
+[node name="Countdown" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4xsuu")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(640, 380)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_hctbn")
+theme_override_font_sizes/normal_font_size = 48
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4jthi")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xl6h1")
+bbcode_enabled = true
+text = "[center]3[/center]
+"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

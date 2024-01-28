@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c3qekxm2v4kfo"]
+[gd_scene load_steps=12 format=3 uid="uid://c3qekxm2v4kfo"]
 
 [ext_resource type="PackedScene" uid="uid://c2hmnbs1mimne" path="res://scenes/player.tscn" id="1_8gafn"]
 [ext_resource type="PackedScene" uid="uid://bfel1g4jbovrl" path="res://scenes/stage.tscn" id="1_64qen"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://75n2nf3524ov" path="res://scenes/laughmantext.tscn" id="9_7i8mk"]
 [ext_resource type="PackedScene" uid="uid://cyc4g5gdlflny" path="res://scenes/cue.tscn" id="9_bcr0m"]
 [ext_resource type="PackedScene" uid="uid://c4jhwfunwp1cg" path="res://scenes/audience_members.tscn" id="10_clrq0"]
-[ext_resource type="PackedScene" uid="uid://bym8d8pt8i26c" path="res://scenes/thrown_object.tscn" id="12_3fg2h"]
 
 [node name="Main" type="Node2D"]
 texture_filter = 1
@@ -67,9 +66,6 @@ scale = Vector2(0.8, 0.8)
 [node name="audienceMembers" parent="." instance=ExtResource("10_clrq0")]
 z_index = 4
 
-[node name="ThrownObject" parent="." instance=ExtResource("12_3fg2h")]
-visible = false
-
 [connection signal="left_curtain_in" from="Stage" to="." method="_on_stage_left_curtain_in"]
 [connection signal="left_curtain_out" from="Stage" to="." method="_on_stage_left_curtain_out"]
 [connection signal="right_curtain_in" from="Stage" to="." method="_on_stage_right_curtain_in"]
@@ -81,4 +77,3 @@ visible = false
 [connection signal="startType" from="UI/Countdown" to="." method="_on_countdown_start_type"]
 [connection signal="finishTyping" from="UI/Keyboard" to="." method="_on_keyboard_finish_typing"]
 [connection signal="laughman_finished_talking" from="UI/LAUGHMANTEXT" to="." method="_on_laughmantext_laughman_finished_talking"]
-[connection signal="done_throwing" from="ThrownObject" to="." method="_on_thrown_object_done_throwing"]
