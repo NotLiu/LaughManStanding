@@ -52,6 +52,7 @@ theme_override_font_sizes/mono_font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rjkjj")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1qfae")
 bbcode_enabled = true
+autowrap_mode = 1
 visible_characters_behavior = 3
 
 [node name="typedText" type="RichTextLabel" parent="."]
@@ -75,6 +76,7 @@ theme_override_font_sizes/mono_font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rjkjj")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_1qfae")
 bbcode_enabled = true
+autowrap_mode = 1
 visible_characters_behavior = 3
 
 [node name="Clack" type="Node2D" parent="."]

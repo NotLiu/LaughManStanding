@@ -22,6 +22,7 @@ func nextText():
 	if index < len(textList):
 		print(textList[index])
 		anim.current_animation = "talk"
+		sound.pitch_scale = .85 + randf_range(-0.2, 0.2)
 		sound.play()
 		text.text = "[center]"+textList[index]+"[/center]"
 		index += 1

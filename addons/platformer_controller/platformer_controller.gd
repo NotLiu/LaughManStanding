@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 class_name PlatformerController2D
 
+signal player_in_place
 signal jumped(is_ground_jump: bool)
 signal hit_ground()
 
@@ -134,6 +135,8 @@ func _ready():
 		jump_buffer_timer.wait_time = jump_buffer
 		jump_buffer_timer.one_shot = true
 
+func playIntro():
+	$cutscene.current_animation = "intro_cutscene"
 
 func _input(_event):
 	acc.x = 0
@@ -183,7 +186,10 @@ func _physics_process(delta):
 	if $AnimationPlayer.current_animation == "":
 		$AnimationPlayer.current_animation = "idle"
 		
-	
+	if global_position.x < 50.0 and is_on_wall():
+		shock(10000)
+	elif global_position.x > 1200 and is_on_wall():
+		shock(-10000)
 	if is_coyote_timer_running() or current_jump_type == JumpType.NONE:
 		jumps_left = max_jump_amount
 	if is_feet_on_ground() and current_jump_type == JumpType.NONE:
@@ -407,8 +413,11 @@ func _on_animation_player_current_animation_changed(name):
 		
 func shock(force):
 	jump()
+	$hit.play()
 	$AnimationPlayer.current_animation = "speak"
 	velocity.x = force # -500.0 for intro scene
+	if force > 1000:
+		velocity.y = -abs(force/4.0)
 
 func emote():
 	jump()
@@ -418,3 +427,8 @@ func hit(dmg):
 	$"/root/Global".points += dmg
 	$hit.play()
 	caught_objects += 1
+
+
+func _on_cutscene_animation_finished(anim_name):
+	if anim_name == "intro_cutscene":
+		emit_signal("player_in_place")

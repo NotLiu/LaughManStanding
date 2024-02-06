@@ -1,4 +1,13 @@
-[gd_scene format=3 uid="uid://b4s51qkvciadu"]
+[gd_scene load_steps=7 format=3 uid="uid://b4s51qkvciadu"]
+
+[ext_resource type="Script" path="res://scenes/end.gd" id="1_trkyb"]
+[ext_resource type="Texture2D" uid="uid://c85idefryqeh" path="res://assets/CHIPI.png" id="2_cmjhd"]
+[ext_resource type="Material" uid="uid://b6bovbfhq0fh4" path="res://shaders/noiseColorMat.tres" id="3_wjrjg"]
+[ext_resource type="FontFile" uid="uid://t1q5jfoubrbi" path="res://assets/CooperBits.ttf" id="4_dddfa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bv4g6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rs8su"]
 
 [node name="END" type="Control"]
 layout_mode = 3
@@ -7,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_trkyb")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -17,12 +27,60 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
-custom_minimum_size = Vector2(500, 500)
+custom_minimum_size = Vector2(700, 500)
 layout_mode = 2
-text = "THE END LOL
-"
+text = "THE END LOL :)
+
+THANKS FOR PLAYING EVERYONE!
+
+deved by:
+@absent_not (twitter) / @polymonolith (twitter) / not_absent (insta)
+
+
+
+
+
+
+with contributions from friends and family"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="CenterContainer"]
 custom_minimum_size = Vector2(300, 200)
 layout_mode = 2
-text = "great GGJ2024 everyone!"
+bbcode_enabled = true
+text = "[b]GREAT GGJ2024 EVERYONE!"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="CenterContainer"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+text = "ran out of time for finale screen and credits :)"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 402.0
+offset_right = 1042.0
+offset_bottom = 459.0
+text = "instead...
+"
+
+[node name="Chipi" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(1021, 542)
+scale = Vector2(0.658371, 0.658371)
+texture = ExtResource("2_cmjhd")
+
+[node name="score" type="RichTextLabel" parent="."]
+material = ExtResource("3_wjrjg")
+custom_minimum_size = Vector2(700, 300)
+layout_mode = 0
+offset_left = 57.0
+offset_top = 575.0
+offset_right = 1198.0
+offset_bottom = 875.0
+theme_override_fonts/normal_font = ExtResource("4_dddfa")
+theme_override_font_sizes/normal_font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bv4g6")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rs8su")
+bbcode_enabled = true
+text = "[fill]SCORE: 99[/fill]
+"

@@ -202,6 +202,7 @@ text = "START
 "
 
 [node name="CREDITS" type="Button" parent="CenterContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.937255, 0.964706, 0.988235, 1)

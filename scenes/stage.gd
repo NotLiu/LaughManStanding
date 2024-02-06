@@ -6,6 +6,9 @@ signal right_curtain_out
 
 signal sparklers_done
 
+signal curtain_down
+signal curtain_up
+
 @onready var leftCurtain = get_node("SET/left-curtain")
 @onready var rightCurtain = get_node("SET/right-curtain")
 
@@ -30,6 +33,12 @@ func sparklers():
 
 func _ready():
 	sparklers()
+	
+func openCurtain():
+	anim.current_animation = "open_curtain"
+
+func closeCurtain():
+	anim.current_animation = "close_curtain"
 
 func _on_leftcollision_body_entered(body):
 	emit_signal("left_curtain_in")
@@ -51,3 +60,7 @@ func _on_rightcollision_body_exited(body):
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "sparkle":
 		emit_signal("sparklers_done")
+	elif anim_name == "open_curtain":
+		emit_signal("curtain_up")
+	elif anim_name == "close_curtain":
+		emit_signal("curtain_down")

@@ -131,7 +131,7 @@ func setNewText(text):
 	bbcodeText = ""
 	typeIndex = 0
 	
-	typingTimer.wait_time = 60.0 * (60.0 / len(text)/5.0) #wait_time calculated for 60 wpm
+	typingTimer.wait_time = 15.0 + 0.5 * (len(text)/5.0) #wait_time calculated for 60 wpm
 	#print(60.0 * (60.0 / len(text)/5.0))
 	
 	displayText.clear()
@@ -154,12 +154,13 @@ func _process(delta):
 	if typing:
 		timerVisual.setFill(typingTimer.time_left / typingTimer.wait_time)
 	if typing and (len(typedText) == len(textToType) or timeOut):
+		timeOut = false
 		timerVisual.visible = false
 		typingTimer.stop()
 		typing = false
 		timeTaken = (Time.get_ticks_msec() - startTime) / 1000.0
 		print("TIME TAKEN:",timeTaken)
-		wpm = len(textToType)/5.0 * 60.0 / timeTaken
+		wpm = charsTyped/5.0 * 60.0 / timeTaken
 		print("WPM:", wpm)
 		#after calculating stats
 		emit_signal("finishTyping")

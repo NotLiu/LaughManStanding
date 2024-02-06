@@ -18,6 +18,7 @@ var objectType = "GOOD" # or BAD
 func startRound(time):
 	visible = true
 	roundTimer.start(time)
+	throwTimer.wait_time = time / numObjects
 	throwTimer.start()
 	throwing = true
 
@@ -29,7 +30,7 @@ func _on_timer_timeout():
 	emit_signal("done_throwing")
 	
 	for object in get_tree().get_nodes_in_group("object"):
-		object.queue_free()
+			object.queue_free()
 
 func _process(delta):
 	timer.setFill(roundTimer.time_left/roundTimer.wait_time)

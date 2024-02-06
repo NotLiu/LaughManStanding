@@ -22,7 +22,7 @@ func _ready():
 
 func _on_area_2d_body_entered(body):
 	if body.name == "floor" and falling:
-		if get_node("Ring"):
+		if get_node("indicator"):
 			$indicator.queue_free()
 		falling = false
 		if scale.x > 1.0:
@@ -44,7 +44,7 @@ func _process(delta):
 		set_collision_mask_value(6, true)
 	
 	if falling:
-		if get_node("Ring"):
+		if get_node("indicator"):
 			$indicator.visible = true
 			$indicator.global_position = Vector2(position.x, 650.0)
 			$indicator.scale = Vector2(0.2 + (max(0.0, global_position.y) / 640.0) * 0.4, 0.2 + (max(0.0, global_position.y) / 640.0) * 0.4)
